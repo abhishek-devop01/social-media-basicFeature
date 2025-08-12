@@ -18,6 +18,12 @@ router.post('/register', async(req,res)=>{
      const user = await userModel.create({
           username, password
      })
+     const token = jwt.sign({
+          id:user._id
+     }, process.env.JWT_SECRET)
+
+     res.cookie('token', token)
+     
      res.status(200).json({
           message:'user created...',
           user
