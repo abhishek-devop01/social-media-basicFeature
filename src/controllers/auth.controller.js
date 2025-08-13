@@ -1,5 +1,6 @@
 const userModel = require('../models/user.model')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 async function registerController(req,res){
      const {username, password} = req.body
@@ -13,7 +14,7 @@ async function registerController(req,res){
 
      const user = await userModel.create({
           username,
-          password
+          password: await bcrypt.hash(password, 10)
      })
 
      const token = jwt.sign({
@@ -23,7 +24,8 @@ async function registerController(req,res){
      res.cookie('token', token)
 
      return res.status(201).json({
-          message: "user registered successfully..."
+          message: "user registered successfully...",
+          user
      })
 }
 
@@ -36,7 +38,7 @@ async function loginController(req, res){
                message: 'user not found!'
           })
      }
-     const isPasswordValid = user.password === password
+     const isPasswordValid = await bcrypt.compare(password, user.password)
 
 
      if(!isPasswordValid){
@@ -51,7 +53,8 @@ async function loginController(req, res){
      res.cookie("token", token)
 
      res.status(200).json({
-          message: "user logged in successfully"
+          message: "user logged in successfully",
+          user
      })
 }
 
