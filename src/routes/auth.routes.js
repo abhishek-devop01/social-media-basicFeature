@@ -1,10 +1,11 @@
+const {registerController, loginController} = require('../controllers/auth.controller')
+
 const express = require('express')
-const userModel = require('../models/user.model')
-const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 
-router.post('/register',)
+router.post('/register', registerController)
+router.post('/login', loginController)
 
 
 
