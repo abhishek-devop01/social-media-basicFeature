@@ -1,6 +1,5 @@
 const { GoogleGenAI } = require("@google/genai");
 
-// The client gets the API key from the environment variable `GEMINI_API_KEY`.
 const ai = new GoogleGenAI({
 });
 
@@ -18,6 +17,13 @@ async function generateCaption(base64ImageFile) {
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: contents,
+    config: {
+      systemInstruction: `You are an expert in generating caption for images.
+      you generate multiple caption for the image.
+      your caption should be short and concise.
+      you use hashtags and emojid in the caption.
+      `
+    },
   });
   return response.text;
 }
