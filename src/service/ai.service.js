@@ -21,7 +21,7 @@ async function generateCaption(base64ImageFile) {
       systemInstruction: `You are an expert in generating caption for images.
       you generate multiple caption for the image.
       your caption should be short and concise.
-      you use hashtags and emojid in the caption.
+      you use hashtags and emojis in the caption.
       `
     },
   });
